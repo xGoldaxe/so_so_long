@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 20:14:27 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 14:46:59 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:28:29 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	put_elt(t_element *elt, t_gamestate *gamestate, t_data *dst, t_data *src)
 {
-	t_elt_opt	bg_options;
 	int			frame;
 
 	elt->actual_frame += 1;

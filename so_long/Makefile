@@ -1,33 +1,42 @@
-SRC =	./get_next_line/get_next_line_utils.c ./get_next_line/get_next_line.c  \
-		lst.c mif_manager.c mif_to_img.c put_pixel.c put_square.c \
+SRC = colors.c ft_realloc_merge.c load_sprites.c my_mlx_pixel_put.c render_frames.c \
+copy_img.c game_over.c loaded_ressources.c place_elements.c render_layers.c \
+ennemies.c gradient.c main.c put_square.c store_map.c \
+ennemies_collison.c input_events.c movement.c put_str.c verify_collision.c \
 
 CC = gcc
 
-HEADER = mif_manager.h ./get_next_line/get_next_line.h
+HEADER = so_long.h
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:%.c=./.build/%.o)
 
-NAME = mif_manager.a
+NAME = so_long
 
 RM = rm -f
 
 LIBC = ar -rc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-%.o : %.c
+LIBFT = cd libft && make libft.a
+
+MIF = cd ../mif_manager && make all
+
+./.build/%.o : %.c
 	$(CC) ${CFLAGS} -I. -o $@ -c $?
 
-${NAME} : $(OBJ)
-	${LIBC} ${NAME} ${OBJ}
+${NAME} :$(OBJ)
+	${LIBFT}
+	${MIF}
+	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
 
 all :	${NAME} 
-	make bonus
 
 clean :
 	${RM} ${OBJ}
 
 fclean :	clean
+	cd libft && make fclean
+	cd ../mif_manager && make fclean
 	${RM} ${NAME}
 
 re :	fclean all

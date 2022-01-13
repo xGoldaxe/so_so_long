@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 14:22:11 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 15:29:12 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:28:19 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	render_next_frame(t_gamestate *gamestate)
 {
 	t_vars		*vars;
 	t_elt_opt	bg_options;
-	t_mif		mif;
-	static int test = 1;
+
 	vars = &(gamestate->vars);
 	if (gamestate->state == 0)
 	{

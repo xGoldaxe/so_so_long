@@ -22,7 +22,6 @@ ${NAME} : $(OBJ)
 	${LIBC} ${NAME} ${OBJ}
 
 all :	${NAME} 
-	make bonus
 
 clean :
 	${RM} ${OBJ}

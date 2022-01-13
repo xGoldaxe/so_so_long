@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 12:35:01 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 14:36:19 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:55:51 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 {
 	t_gamestate	gamestate;
 
-	if (argc < 1)
+	if (argc < 2)
 	{
 		printf("Error.\n");
 		return (0);

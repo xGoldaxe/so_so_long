@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:05:31 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 14:45:26 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:29:01 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	move_ennemies(t_gamestate *gamestate)
 	t_list		*element;
 	t_element	*elt;
 	int			is_collision;
-	t_elt_opt	bg_options;
 
 	element = gamestate->elements;
 	clear_ennemies(gamestate);

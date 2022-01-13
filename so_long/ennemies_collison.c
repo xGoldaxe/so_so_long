@@ -6,14 +6,14 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:05:31 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/08 15:44:02 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 14:30:28 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
 int	is_collision_ennemies(t_element *ennemy,
-		t_element *element, t_gamestate *gamestate);
+		t_element *element);
 
 int	verify_ennemies_collision(t_element *ennemy,
 		t_gamestate *gamestate);
@@ -43,10 +43,9 @@ static void	solid_collision_ennemies(t_element *ennemy, t_element *element)
 		ennemy->coord.x = element->coord.x + element->size.width;
 }
 
-static int	ennemies_collision(t_element *ennemy, t_element *element,
-t_gamestate *gamestate)
+static int	ennemies_collision(t_element *ennemy, t_element *element)
 {
-	if (is_collision_ennemies(ennemy, element, gamestate))
+	if (is_collision_ennemies(ennemy, element))
 	{
 		if (element->type == '1')
 		{
@@ -69,7 +68,7 @@ t_gamestate *gamestate)
 		elt = (t_element *)element->content;
 		if (elt->visible)
 		{
-			if (ennemies_collision(ennemy, elt, gamestate))
+			if (ennemies_collision(ennemy, elt))
 				return (1);
 		}
 		element->content = (void *)elt;
@@ -103,7 +102,7 @@ t_gamestate *gamestate)
 // }
 
 int	is_collision_ennemies(t_element *ennemy,
-t_element *element, t_gamestate *gamestate)
+t_element *element)
 {
 	int		unitwidth;
 	int		unitheight;
