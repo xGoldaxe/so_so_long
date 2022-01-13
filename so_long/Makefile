@@ -7,7 +7,7 @@ CC = gcc
 
 HEADER = so_long.h
 
-OBJ = $(SRC:%.c=./.build/%.o)
+OBJ = $(SRC:%.c=./build/%.o)
 
 NAME = so_long
 
@@ -21,11 +21,11 @@ LIBFT = cd libft && make libft.a
 
 MIF = cd ../mif_manager && make all
 
-./.build/%.o : %.c
+./build/%.o : %.c
 	$(CC) ${CFLAGS} -I. -o $@ -c $?
 
 ${NAME} :$(OBJ)
-	mkdir -p .build
+	mkdir -p build
 	${LIBFT}
 	${MIF}
 	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
