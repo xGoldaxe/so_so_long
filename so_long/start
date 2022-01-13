@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gcc  -I /usr/local/include/mlx.h $1 ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit && ./a.out $2

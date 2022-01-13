@@ -1,0 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/29 10:57:17 by pleveque          #+#    #+#             */
+/*   Updated: 2022/01/09 17:41:25 by pleveque         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
+size_t	ft_strlen_n(char *str)
+{
+	size_t	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	return (i);
+}
+
+size_t	gnl_ft_strlen(const char *str)
+{
+	size_t	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+char	*free_null(char *ptr)
+{
+	if (ptr)
+		free(ptr);
+	return (NULL);
+}
+
+int	ft_isline(char *str)
+{
+	unsigned int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*gnl_ft_realloc_cat(char *src, char *dst)
+{
+	char			*tmp;
+	unsigned int	i;
+
+	tmp = malloc(sizeof(char) * (gnl_ft_strlen(src) + gnl_ft_strlen(dst) + 1));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	if (dst)
+	{
+		while (dst[i])
+		{
+			tmp[i] = dst[i];
+			i++;
+		}
+	}
+	while (*src)
+	{
+		tmp[i] = *src;
+		i++;
+		src++;
+	}
+	dst = free_null(dst);
+	tmp[i] = '\0';
+	return (tmp);
+}

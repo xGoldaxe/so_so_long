@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"math.h": "c",
+		"__locale": "c",
+		"so_long.h": "c"
+	}
+}
