@@ -7,37 +7,50 @@ CC = gcc
 
 HEADER = so_long.h
 
-OBJ = $(SRC:%.c=./build/%.o)
+OBJ = $(SRC:%.c=./.build/%.o)
 
 NAME = so_long
 
-RM = rm -f
+RM = rm -rf
 
 LIBC = ar -rc
 
 CFLAGS = -Wall -Wextra -Werror
 
-LIBFT = cd libft && make libft.a
+LIBFT = @printf "\n\t\t${B_CYAN}GENERATE libft library ...\n\n${NONE}"  && cd libft && make libft.a
 
-MIF = cd ../mif_manager && make all
+MIF = @printf "\n\t\t${B_CYAN}GENERATE mif_manager library ...\n\n${NONE}" && cd ../mif_manager && make all
 
-./build/%.o : %.c
-	$(CC) ${CFLAGS} -I. -o $@ -c $?
+# COLORS
+NONE			= \033[0m
+CL_LINE			= \033[2K
+B_RED			= \033[1;31m
+B_GREEN			= \033[1;32m
+B_MAGENTA 		= \033[1;35m
+B_CYAN 			= \033[1;36m
 
-${NAME} :$(OBJ)
-	mkdir -p build
+./.build/%.o : %.c
+	@$(CC) ${CFLAGS} -I. -o $@ -c $?
+	@printf "${B_MAGENTA}Compilling $? ...\n${NONE}"
+
+${NAME} : $(OBJ)
 	${LIBFT}
 	${MIF}
-	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
+	@${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
+	@printf "${B_GREEN}\t\t ==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
 
-all :	${NAME} 
+all :	
+	@mkdir -p .build
+	@make ${NAME}
 
 clean :
-	${RM} ${OBJ}
+	@${RM} .build
+	@printf "${B_RED}\t\t XX{${NAME}} CLEANED SUCCESFULLY XX${NONE}\n"
 
 fclean :	clean
-	cd libft && make fclean
-	cd ../mif_manager && make fclean
-	${RM} ${NAME}
+	@cd libft && make fclean
+	@cd ../mif_manager && make fclean
+	@${RM} ${NAME}
+	@printf "${B_RED}\t\t XX{${NAME}} FCLEAN SUCCESFULL XX${NONE}\n"
 
 re :	fclean all
