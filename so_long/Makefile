@@ -25,6 +25,7 @@ MIF = cd ../mif_manager && make all
 	$(CC) ${CFLAGS} -I. -o $@ -c $?
 
 ${NAME} :$(OBJ)
+	mkdir -p .build
 	${LIBFT}
 	${MIF}
 	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
