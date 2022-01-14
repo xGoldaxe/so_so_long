@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:59:51 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 14:29:43 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:19:43 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include	<sys/stat.h>
 # include	<stdarg.h>
 # include	"libft/libft.h"
+# include	"../mif_manager/get_next_line/get_next_line.h"
 
 # define GAME_WIDTH 1024
 # define GAME_HEIGHT 1024
@@ -38,12 +39,12 @@
 # define ENNEMIES_SPEED 60
 
 /* SPRITES */
-#define HERO_SPRITE 10
-#define HERO_WALK_SPRITE 12
-#define ENNEMIES_SPRITE 0
-#define C_SPRITE 3
-#define EXIT_SPRITE 4
-#define WALL_SPRITE 5
+# define HERO_SPRITE 5
+# define HERO_WALK_SPRITE 7
+# define ENNEMIES_SPRITE 0
+# define C_SPRITE 2
+# define EXIT_SPRITE 3
+# define WALL_SPRITE 4
 
 typedef struct s_data
 {
@@ -91,7 +92,6 @@ typedef struct s_mif {
 	t_list			*colors;
 }	t_mif;
 
-
 typedef struct s_gamestate {
 	t_vars			vars;
 	int				touch_press;
@@ -107,8 +107,8 @@ typedef struct s_gamestate {
 	int				score;
 	int				unit_size;
 	int				game_speed;
-	void			**sprites;
 	t_mif			*mif;
+	char			**str_loaded;
 }								t_gamestate;
 
 typedef struct s_elt_opt {
@@ -116,10 +116,13 @@ typedef struct s_elt_opt {
 	int		color;
 	t_coord	coord;
 	t_size	size;
+	int		direction;
 }	t_elt_opt;
 
-/* GLOBALS */
-extern t_list	*g_loaded;
+typedef struct s_malloc {
+	void	*content;
+	void	(*cleaner)(void *var);
+}	t_malloc;
 
 /* COLORS */
 int			get_t(int trgb);
@@ -129,7 +132,7 @@ int			get_b(int trgb);
 int			create_trgb(int t, int r, int g, int b);
 
 /* PUT SHAPES */
-void		put_str(t_elt_opt options, char *content, int size);
+char		**put_str(t_elt_opt options, char *content, int size);
 void		ft_put_gradient(t_size size, int a,
 				int b, t_data img);
 void		put_square(t_elt_opt options, int width,
@@ -152,10 +155,15 @@ int			verify_collision(t_coord *coord, t_gamestate *gamestate);
 
 /* MAP GENERATION */
 void		place_elements(t_gamestate *gamestate);
-void		put_elt(t_element *elt, t_gamestate *gamestate, t_data *dst, t_data *src);
+void		put_elt(t_element *elt, t_gamestate *gamestate,
+				t_data *dst, t_data *src);
 
-/* PARSING */
+/* MAP */
 t_list		*store_map(char	*file, t_gamestate *gamestate);
+void		read_map(int fd, t_gamestate *gamestate, int is_storing);
+void		add_element(char c, t_coord coord, t_gamestate *gamestate);
+t_element	*find_create_element(char c, t_coord coord, t_gamestate *gamestate);
+
 /* UTILS */
 char		*ft_realloc_merge(int nb_str, ...);
 char		*ft_realloc_cat(char *src, char *dst);
@@ -167,10 +175,14 @@ int			verify_collision_ennemies(t_element *elt,
 
 /* LOADING */
 void		load_gamestate(t_gamestate *gamestate, char *map_src);
-void		*malloc_load(int size, t_gamestate *gamestate);
+void		*malloc_load(int size, void free_function(void *));
+//free
+void		free_sprites(t_mif *mif);
+void		clean_str(char **loaded);
 
 /* GLOBAL and SAFETY */
-void		clean_exit(void);
+void		clean_exit(t_gamestate *gamestate);
+void		parse_error(void);
 
 /* INPUTS EVENTS */
 int			on_press(int keycode, t_gamestate *gamestate);
@@ -185,7 +197,8 @@ int			update_coord(int keycode, t_coord *player_coord,
 
 /* MIF MANAGER */
 void		mif_read(char *file, t_mif *options);
-void		mif_to_img(t_mif *mif, t_data *img, t_data *ref, int size, t_coord coord, int direction);
+void		mif_to_img(t_mif *mif, t_data *img, t_data *ref, t_elt_opt ref_opt);
 void		load_sprites(t_gamestate *gamestate);
+void		mif_clean(t_mif *mif);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:05:31 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 14:30:28 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/13 16:19:13 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,30 +76,6 @@ t_gamestate *gamestate)
 	}
 	return (0);
 }
-
-// static int	is_collision_ennemies_same_coord(t_element *ennemy,
-// t_element *element, t_gamestate *gamestate)
-// {
-// 	if ((coord->x == element->coord.x
-// 		&& coord->x + ennemy->size.width
-// 		== element->coord.x + gamestate->unit_size))
-// 	if ((coord->y + ennemy->size.width > element->coord.y
-// 			&& coord->y + gamestate->unit_size
-// 			< element->coord.y + gamestate->unit_size)
-// 		|| (coord->y > element->coord.y
-// 			&& coord->y < element->coord.y + gamestate->unit_size))
-// 		return (1);
-// 	if ((coord->x + ennemy->size.width > element->coord.x
-// 		&& coord->x + ennemy->size.width
-// 		< element->coord.x + gamestate->unit_size)
-// 	|| (coord->x > element->coord.x && coord->x
-// 		< element->coord.x + gamestate->unit_size))
-// 	if ((coord->y == element->coord.y
-// 			&& coord->y + ennemy->size.width
-// 			== element->coord.y + gamestate->unit_size))
-// 		return (1);
-// 	return (0);
-// }
 
 int	is_collision_ennemies(t_element *ennemy,
 t_element *element)

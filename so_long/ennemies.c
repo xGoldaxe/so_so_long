@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:05:31 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 14:29:01 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:06:18 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	move_ennemies(t_gamestate *gamestate)
 		elt = (t_element *)element->content;
 		if (elt->speed && (elt->type == 'H' || elt->type == 'V'))
 		{
-
 			is_collision = verify_collision_ennemies(elt, gamestate);
 			if (is_collision)
 				elt->direction = -elt->direction;
 			elt = (t_element *)element->content;
-			put_elt(elt, gamestate, &(gamestate->vars).img, &(gamestate->vars).img);
+			put_elt(elt, gamestate, &(gamestate->vars).img,
+				&(gamestate->vars).img);
 		}
 		element->content = (void *)elt;
 		element = element->next;

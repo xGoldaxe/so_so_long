@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 16:06:58 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 12:41:42 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 15:44:39 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ unsigned int	find_color(t_list *colors, char c)
 
 void	mif_read(char *file, t_mif *options)
 {
-	int 	fd;
+	int		fd;
 	char	*line;
 	int		index;
 	int		x;
@@ -92,7 +92,7 @@ void	mif_read(char *file, t_mif *options)
 	line = get_next_line(fd);
 	options->height = atoi(line);
 	free(line);
-	options->container = malloc(32 * options->width * options->height);
+	options->container = malloc(sizeof(int) * options->width * options->height);
 	options->colors = NULL;
 	store_colors(&options->colors, fd);
 	index = 0;

@@ -6,26 +6,14 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 14:23:15 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 12:48:57 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:58:54 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	on_press(int keycode, t_gamestate *gamestate)
+static void	on_press_continue(t_gamestate *gamestate, int keycode)
 {
-	if ((keycode == TOUCH_UP
-			|| keycode == TOUCH_DOWN
-			|| keycode == TOUCH_LEFT
-			|| keycode == TOUCH_RIGHT))
-	{
-		gamestate->moving = 1;
-		if (gamestate->hero.sprite != HERO_WALK_SPRITE)
-			gamestate->hero.actual_frame = 0;
-		gamestate->hero.sprite = HERO_WALK_SPRITE;
-		gamestate->hero.number_frames = 4;
-		gamestate->hero.frame_speed = 10;
-	}
 	if (keycode == TOUCH_UP)
 	{
 		gamestate->touch_press = TOUCH_UP;
@@ -46,8 +34,25 @@ int	on_press(int keycode, t_gamestate *gamestate)
 		gamestate->touch_press = TOUCH_DOWN;
 		gamestate->hero.direction = 2;
 	}
+}
+
+int	on_press(int keycode, t_gamestate *gamestate)
+{
+	if ((keycode == TOUCH_UP
+			|| keycode == TOUCH_DOWN
+			|| keycode == TOUCH_LEFT
+			|| keycode == TOUCH_RIGHT))
+	{
+		gamestate->moving = 1;
+		if (gamestate->hero.sprite != HERO_WALK_SPRITE)
+			gamestate->hero.actual_frame = 0;
+		gamestate->hero.sprite = HERO_WALK_SPRITE;
+		gamestate->hero.number_frames = 4;
+		gamestate->hero.frame_speed = 10;
+	}
+	on_press_continue(gamestate, keycode);
 	if (keycode == ESCAPE)
-		clean_exit();
+		clean_exit(gamestate);
 	return (1);
 }
 

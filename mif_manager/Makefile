@@ -1,5 +1,5 @@
 SRC =	./get_next_line/get_next_line_utils.c ./get_next_line/get_next_line.c  \
-		lst.c mif_manager.c mif_to_img.c put_pixel.c put_square.c \
+		lst.c mif_manager.c mif_to_img.c put_pixel.c put_square.c mif_clean.c \
 
 CC = gcc
 

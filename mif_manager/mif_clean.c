@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loaded_ressources.c                                :+:      :+:    :+:   */
+/*   mif_clean.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/05 16:29:16 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 16:48:46 by pleveque         ###   ########.fr       */
+/*   Created: 2022/01/08 18:45:03 by pleveque          #+#    #+#             */
+/*   Updated: 2022/01/14 17:53:51 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "mif_manager.h"
 
-void	*malloc_load(int size, void (*free_function)(void *))
+void	mif_clean(t_mif *mif)
 {
-	static t_list	*loaded;
-	t_malloc		malloced;
+	t_list	*next;
 
-	malloced.content = malloc(size);
-	malloced.cleaner = free_function;
-	if (!loaded)
-		loaded = ft_lstnew(&malloced);
-	else
-		ft_lstadd_front(&loaded, ft_lstnew(&malloced));
-	return (NULL);
+	while (mif->colors)
+	{
+		next = mif->colors->next;
+		free(mif->colors->content);
+		free(mif->colors);
+		mif->colors = next;
+	}
+	free(mif->container);
 }

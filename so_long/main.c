@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 12:35:01 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 14:55:51 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:59:21 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	load_gamestate(t_gamestate *gamestate, char *map_src)
 		gamestate->map_size.height * gamestate->unit_size);
 }
 
-t_list	*g_loaded = NULL;
-
 int	main(int argc, char **argv)
 {
 	t_gamestate	gamestate;
@@ -74,20 +72,13 @@ int	main(int argc, char **argv)
 	load_gamestate(&gamestate, argv[1]);
 	mlx_hook(gamestate.vars.win, 2, 0, on_press, &gamestate);
 	mlx_hook(gamestate.vars.win, 3, 0, on_release, &gamestate);
-	mlx_hook(gamestate.vars.win, 17, 0, clean_exit_event, NULL);
+	mlx_hook(gamestate.vars.win, 17, 0, clean_exit_event, &gamestate);
 	mlx_loop_hook(gamestate.vars.mlx, render_next_frame, &gamestate);
 	mlx_loop(gamestate.vars.mlx);
 }
 
-static int	clean_exit_event(void *unused)
+static int	clean_exit_event(void *gamestate)
 {
-	(void) unused;
-	clean_exit();
+	clean_exit((t_gamestate *)gamestate);
 	return (0);
-}
-
-void	clean_exit(void)
-{
-	printf("not yet clean\n");
-	exit(EXIT_SUCCESS);
 }

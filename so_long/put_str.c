@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 18:02:06 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/08 14:13:58 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:01:30 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**load_letters(char *src, int nbr_char)
 	char	buff[1];
 	char	**res;
 
-	res = malloc(sizeof(char *) * nbr_char);
+	res = malloc(sizeof(char *) * (nbr_char + 1));
 	fd = open(src, O_RDONLY);
 	y = 0;
 	while (y < nbr_char)
@@ -37,6 +37,7 @@ char	**load_letters(char *src, int nbr_char)
 		}
 		y++;
 	}
+	res[y] = NULL;
 	return (res);
 }
 
@@ -81,22 +82,20 @@ static int	get_vcode(char c)
 		return (c - 'A');
 }
 
-void	put_str(t_elt_opt options, char *content, int size)
+char	**put_str(t_elt_opt options, char *content, int size)
 {
 	int			x;
 	int			z;
 	int			left;
-	int			letter_spacing;
 	static char	**letters = NULL;
 
 	if (!letters)
 	{
 		letters = load_letters("insane_fonts.txt", 38);
 		if (!letters)
-			return ;
+			return (NULL);
 	}
-	letter_spacing = 3;
-	left = options.coord.x - ((10 * size) + (letter_spacing * size))
+	left = options.coord.x - ((10 * size) + (3 * size))
 		* ft_strlen(content) / 2;
 	options.coord.y -= (size * 10) / 2;
 	z = 0;
@@ -105,7 +104,21 @@ void	put_str(t_elt_opt options, char *content, int size)
 	{
 		options.coord.x = left + x;
 		write_letter(options, letters[get_vcode(content[z])], size);
-		x += (10 * size) + (letter_spacing * size);
+		x += (10 * size) + (3 * size);
 		z++;
 	}
+	return (letters);
+}
+
+void	clean_str(char **loaded)
+{
+	int	i;
+
+	i = 0;
+	while (loaded[i])
+	{
+		free(loaded[i]);
+		++i;
+	}
+	free(loaded);
 }

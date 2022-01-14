@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 16:07:36 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/10 17:17:41 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:12:07 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@
 # include	<unistd.h>
 # include	<fcntl.h>
 # include	<mlx.h>
-#include <string.h>
-
-#include "./get_next_line/get_next_line.h"
-
+# include	<string.h>
+# include	"./get_next_line/get_next_line.h"
 
 typedef struct s_list {
 	void			*content;
@@ -40,7 +38,7 @@ typedef struct s_color {
 	char			c;
 }	t_color;
 
-typedef struct	s_data {
+typedef struct s_data {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -54,8 +52,8 @@ typedef struct s_coord {
 }	t_coord;
 
 typedef struct s_size {
-	int width;
-	int height;
+	int	width;
+	int	height;
 }	t_size;
 
 typedef struct s_elt_opt {
@@ -63,11 +61,12 @@ typedef struct s_elt_opt {
 	int		color;
 	t_coord	coord;
 	t_size	size;
+	int		direction;
 }	t_elt_opt;
 
-
 void	mif_read(char *file, t_mif *options);
-void	mif_to_img(t_mif *mif, t_data *img, t_data *ref, int size, t_coord coord, int direction);
+void	mif_to_img(t_mif *mif, t_data *img, t_data *ref, t_elt_opt ref_opt);
+void	mif_clean(t_mif *mif);
 
 /* UTILS */
 // int		ft_atoi(const char *nptr);

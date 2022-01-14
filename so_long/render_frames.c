@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 14:22:11 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/13 14:28:19 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:53:47 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	print_score(t_gamestate *gamestate)
 	bg_options.size.width = gamestate->unit_size * gamestate->map_size.width;
 	bg_options.size.height = gamestate->unit_size;
 	put_square_from_bg(&vars->img, &gamestate->blocks_layer, bg_options);
-	put_str(str_options, content, 2);
+	gamestate->str_loaded = put_str(str_options, content, 2);
 	free(content);
 }
 
@@ -53,9 +53,8 @@ int	render_next_frame(t_gamestate *gamestate)
 		move_ennemies(gamestate);
 		update_coord(gamestate->touch_press,
 			&gamestate->hero.coord, gamestate);
-		// bg_options.coord = gamestate->hero.coord;
-		put_elt(&gamestate->hero, gamestate, &vars->img, &gamestate->blocks_layer);
-		// mif_to_img(&gamestate->mif[HERO_SPRITE], &vars->img, &gamestate->blocks_layer, bg_options.size.height, bg_options.coord, gamestate->hero.direction);
+		put_elt(&gamestate->hero, gamestate, &vars->img,
+			&gamestate->blocks_layer);
 		print_score(gamestate);
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img,

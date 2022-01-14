@@ -6,77 +6,76 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 18:45:03 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/12 12:44:12 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:13:40 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mif_manager.h"
 
-void swap_coord_dir(t_coord *coord, int size, int dir)
+t_coord	swap_coord_dir(t_coord *coord, int size, int dir)
 {
-	int	tmp;
+	t_coord	res;
 
 	size--;
 	if (dir == 2)
 	{
-		coord->x = - (coord->x - size);
-		coord->y = - (coord->y - size);
+		res.x = - (coord->x - size);
+		res.y = - (coord->y - size);
 	}
 	else if (dir == -1)
 	{
-		tmp = coord->x;
-		coord->x = - (coord->y - size);
-		coord->y = tmp;
+		res.x = - (coord->y - size);
+		res.y = coord->x;
 	}
 	else if (dir == 1)
 	{
-		tmp = coord->y;
-		coord->y = - (coord->x - size);
-		coord->x = tmp;
+		res.y = - (coord->x - size);
+		res.x = coord->y;
 	}
+	else
+		res = *coord;
+	return (res);
 }
 
-void	mif_to_img(t_mif *mif, t_data *img, t_data *ref, int size, t_coord coord, int direction)
+void	print_pixel(t_elt_opt options, int unit, t_elt_opt ref_opt, t_mif *mif)
 {
-	int				x;
-	int				y;
 	unsigned int	color;
+
+	color = mif->container[options.coord.y * mif->width + options.coord.x];
+	options.coord = swap_coord_dir(&options.coord,
+			ref_opt.size.width / unit, ref_opt.direction);
+	options.coord.x = (options.coord.x * unit) + ref_opt.coord.x;
+	options.coord.y = (options.coord.y * unit) + ref_opt.coord.y;
+	if ((unsigned int)color >= 0xFF000000)
+		put_square_from_bg(&options.img, &ref_opt.img, options);
+	else
+		put_square(options, unit, unit, color);
+}
+
+void	mif_to_img(t_mif *mif, t_data *img, t_data *ref, t_elt_opt ref_opt)
+{
 	t_elt_opt		options;
 	int				unit;
-	t_coord			tmp;
+	int				size;
 
-	unit = size / mif->width;
-	if (size % mif->width)
+	unit = ref_opt.size.width / mif->width;
+	if (ref_opt.size.width % mif->width)
 		unit++;
-	y = 0;
-	options.coord.y = coord.y;
+	size = ref_opt.size.width / unit;
+	options.size.width = unit;
+	options.size.height = unit;
+	options.coord.y = 0;
 	options.img = *img;
-	while (options.coord.y - coord.y  < size)
+	ref_opt.img = *ref;
+	while (options.coord.y < size)
 	{
-		x = 0;
-		options.coord.x = coord.x;
-		while (options.coord.x - coord.x < size)
+		options.coord.x = 0;
+		while (options.coord.x < size)
 		{
-			options.size.width = unit;
-			options.size.height = unit;
-			color = mif->container[(y * mif->width )+ x];
-			tmp.x = options.coord.x;
-			tmp.y = options.coord.y;
-			///***********
-			options.coord.x = (options.coord.x - coord.x) / unit ;
-			options.coord.y = (options.coord.y - coord.y) / unit ;
-			swap_coord_dir(&options.coord, size / unit, direction);
-			options.coord.x = options.coord.x * unit + coord.x;
-			options.coord.y = options.coord.y * unit + coord.y;
-			if (color >= 0xFF000000)
-				put_square_from_bg(img, ref, options);
-			else
-				put_square(options, options.size.width, options.size.height, color);
-			options.coord.y = tmp.y;
-			options.coord.x = tmp.x + unit;
-			++x;
+			(void)ref;
+			print_pixel(options, unit, ref_opt, mif);
+			options.coord.x++;
 		}
-		++y;
-		options.coord.y += unit;
+		options.coord.y++;
 	}
 }

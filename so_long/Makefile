@@ -2,6 +2,7 @@ SRC = colors.c ft_realloc_merge.c load_sprites.c my_mlx_pixel_put.c render_frame
 copy_img.c game_over.c loaded_ressources.c place_elements.c render_layers.c \
 ennemies.c gradient.c main.c put_square.c store_map.c \
 ennemies_collison.c input_events.c movement.c put_str.c verify_collision.c \
+read_map.c create_element.c clean_exit.c \
 
 CC = gcc
 
