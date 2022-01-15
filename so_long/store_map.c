@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 20:29:26 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 16:07:53 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 15:00:29 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ t_list	*store_map(char	*file, t_gamestate *gamestate)
 	int			fd;
 
 	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		parse_error(gamestate);
 	read_map(fd, gamestate, 0);
 	close(fd);
 	setup_unit_size(gamestate);

@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 12:35:01 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 16:59:21 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 14:57:25 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ int	main(int argc, char **argv)
 		printf("Error.\n");
 		return (0);
 	}
+	gamestate.str_loaded = NULL;
+	gamestate.mif = NULL;
+	gamestate.elements = NULL;
 	load_sprites(&gamestate);
 	load_gamestate(&gamestate, argv[1]);
 	mlx_hook(gamestate.vars.win, 2, 0, on_press, &gamestate);

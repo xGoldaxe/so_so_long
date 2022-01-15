@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/13 16:47:47 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 18:24:50 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 14:52:40 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int *required, t_gamestate *gamestate)
 	line_size = ft_strnlen(line);
 	if (!(line[0] == '1' && line[line_size - 1] == '1')
 		|| (line[line_size] == '\0' && !line_wall_full(line, line_size)))
-		parse_error();
+		parse_error(gamestate);
 	actual_coord->x = 0;
 	while (actual_coord->x < line_size)
 	{
 		if (ft_arrinclude("01PECHV", line[actual_coord->x]) == -1)
-			parse_error();
+			parse_error(gamestate);
 		if (ft_arrinclude("PEC", line[actual_coord->x]) != -1)
 			required[ft_arrinclude("PEC", line[actual_coord->x])] = 1;
 		if (required[3])
@@ -83,7 +83,7 @@ void	read_map(int fd, t_gamestate *gamestate, int is_storing)
 	line = get_next_line(fd);
 	gamestate->map_size.width = ft_strnlen(line);
 	if (!line || !line_wall_full(line, gamestate->map_size.width))
-		parse_error();
+		parse_error(gamestate);
 	actual_coord.y = 0;
 	required[0] = 0;
 	required[1] = 0;
@@ -92,12 +92,12 @@ void	read_map(int fd, t_gamestate *gamestate, int is_storing)
 	while (line)
 	{
 		if (ft_strnlen(line) != gamestate->map_size.width)
-			parse_error();
+			parse_error(gamestate);
 		iterate_line(line, &actual_coord, required, gamestate);
 		line = get_next_line(fd);
 		actual_coord.y++;
 	}
 	if (!required[0] || !required[1] || !required[2])
-		parse_error();
+		parse_error(gamestate);
 	gamestate->map_size.height = actual_coord.y;
 }

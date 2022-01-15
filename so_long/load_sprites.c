@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 12:09:20 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 17:52:11 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 14:59:45 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	free_sprites(t_mif *mif)
 	i = 0;
 	while (i < 11)
 	{
-		mif_clean(&mif[i]);
+		if (&mif[i])
+			mif_clean(&mif[i]);
 		i++;
 	}
 	free(mif);

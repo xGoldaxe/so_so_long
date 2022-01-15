@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:59:51 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 18:19:43 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 14:51:18 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void		clean_str(char **loaded);
 
 /* GLOBAL and SAFETY */
 void		clean_exit(t_gamestate *gamestate);
-void		parse_error(void);
+void		parse_error(t_gamestate *gamestate);
 
 /* INPUTS EVENTS */
 int			on_press(int keycode, t_gamestate *gamestate);
