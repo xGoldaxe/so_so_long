@@ -34,7 +34,10 @@ B_CYAN 			= \033[1;36m
 	@$(CC) ${CFLAGS} -I. -o $@ -c $?
 	@printf "${B_MAGENTA}Compilling $? ...\n${NONE}"
 
-${NAME} : $(OBJ)
+${NAME} :
+	@make all
+
+build : $(OBJ)
 	${LIBFT}
 	${MIF}
 	@${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
@@ -42,7 +45,7 @@ ${NAME} : $(OBJ)
 
 all :	
 	@mkdir -p .build
-	@make ${NAME}
+	@make build
 
 clean :
 	@${RM} .build
