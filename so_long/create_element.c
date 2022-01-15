@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:07:42 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/14 18:04:15 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/15 15:50:12 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ t_gamestate *gamestate)
 	res->size.height = gamestate->unit_size;
 	res->direction = 0;
 	res->speed = 0;
+	res->frame_speed = 0;
+	res->number_frames = 1;
+	res->actual_frame = 0;
 	res->sprite = WALL_SPRITE;
 	if (c == 'E')
 		res->sprite = EXIT_SPRITE;
