@@ -34,18 +34,15 @@ B_CYAN 			= \033[1;36m
 	@$(CC) ${CFLAGS} -I. -o $@ -c $?
 	@printf "${B_MAGENTA}Compilling $? ...\n${NONE}"
 
-${NAME} :
-	@make all
-
-build : $(OBJ)
-	${LIBFT}
-	${MIF}
-	@${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
-	@printf "${B_GREEN}\t\t ==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
-
 all :	
 	@mkdir -p .build
-	@make build
+	@make ${NAME}
+
+${NAME} : $(OBJ)
+	${LIBFT}
+	${MIF}
+	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
+	@printf "${B_GREEN}\t\t ==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
 
 clean :
 	@${RM} .build
