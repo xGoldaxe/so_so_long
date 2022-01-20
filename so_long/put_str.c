@@ -6,11 +6,27 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 18:02:06 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/15 15:05:29 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:58:49 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	*clean_str(char **loaded)
+{
+	int	i;
+
+	i = 0;
+	if (!loaded)
+		return (NULL);
+	while (loaded[i])
+	{
+		free(loaded[i]);
+		++i;
+	}
+	free(loaded);
+	return (NULL);
+}
 
 char	**load_letters(char *src, int nbr_char)
 {
@@ -21,14 +37,21 @@ char	**load_letters(char *src, int nbr_char)
 	char	**res;
 
 	res = malloc(sizeof(char *) * (nbr_char + 1));
+	if (!res)
+		return (NULL);
 	fd = open(src, O_RDONLY);
+	if (fd == -1)
+	{
+		free(res);
+		return (NULL);
+	}
 	y = 0;
 	while (y < nbr_char)
 	{
 		i = 0;
 		res[y] = malloc(sizeof(char) * 111);
 		if (!res[y])
-			return (NULL);
+			return (clean_str(res));
 		while (i < 111)
 		{
 			read(fd, buff, 1);
@@ -108,17 +131,4 @@ char	**put_str(t_elt_opt options, char *content, int size)
 		z++;
 	}
 	return (letters);
-}
-
-void	clean_str(char **loaded)
-{
-	int	i;
-
-	i = 0;
-	while (loaded[i])
-	{
-		free(loaded[i]);
-		++i;
-	}
-	free(loaded);
 }

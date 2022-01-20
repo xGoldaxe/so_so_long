@@ -6,7 +6,7 @@
 /*   By: pleveque <pleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:59:51 by pleveque          #+#    #+#             */
-/*   Updated: 2022/01/15 15:51:41 by pleveque         ###   ########.fr       */
+/*   Updated: 2022/01/20 17:55:42 by pleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void		load_gamestate(t_gamestate *gamestate, char *map_src);
 void		*malloc_load(int size, void free_function(void *));
 //free
 void		free_sprites(t_mif *mif);
-void		clean_str(char **loaded);
+void		*clean_str(char **loaded);
 
 /* GLOBAL and SAFETY */
 void		clean_exit(t_gamestate *gamestate);

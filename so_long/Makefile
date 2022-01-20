@@ -1,5 +1,6 @@
 SRC = colors.c ft_realloc_merge.c load_sprites.c my_mlx_pixel_put.c render_frames.c \
-copy_img.c game_over.c loaded_ressources.c place_elements.c render_layers.c \
+utils.c \
+copy_img.c game_over.c place_elements.c render_layers.c \
 ennemies.c gradient.c main.c put_square.c store_map.c \
 ennemies_collison.c input_events.c movement.c put_str.c verify_collision.c \
 read_map.c create_element.c clean_exit.c \
@@ -41,7 +42,9 @@ all :
 ${NAME} : $(OBJ)
 	${LIBFT}
 	${MIF}
-	${CC} ${CFLAGS} -o ${NAME} -I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L /usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
+	${CC} ${CFLAGS} -o ${NAME} -fsanitize=address -g  -static-libsan \
+	-I /usr/local/include/mlx.h ${OBJ} ./libft/libft.a ../mif_manager/mif_manager.a -L \
+	/usr/local/lib/ -lmlx -framework OpenGl -framework Appkit
 	@printf "${B_GREEN}\t\t ==>{${NAME}} LINKED SUCCESFULLY<==${NONE}\n"
 
 clean :
